@@ -1,7 +1,9 @@
 <template>
     <section v-if="weather.season" class="weather">
+        <h1>Weather</h1>
         <div><span class="weather-info">Date: {{weather.terrestrial_date}}</span><span class="weather-info">Season: {{weather.season}}</span></div>
         <div><span class="weather-info">Min temp.: {{weather.min_temp}} °C</span><span class="weather-info">Max temp.: {{weather.max_temp}} °C</span></div>
+        <div><span class="weather-info">Sunrise: {{weather.sunrise}}</span><span class="weather-info">Sunset: {{weather.sunset}}</span></div>
     </section>
 </template>
 <script>
@@ -10,16 +12,7 @@ import axios from "axios";
 export default {
     data() {
         return {
-            weather: {
-                terrestrial_date: undefined,
-                sol: undefined,
-                ls: undefined,
-                season: undefined,
-                min_temp: undefined,
-                max_temp: undefined,
-                sunrise: undefined,
-                sunset: undefined,
-            }
+            weather: {}
         }
     },
     async mounted() {

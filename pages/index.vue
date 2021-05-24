@@ -1,6 +1,11 @@
 <template>
+<div>
   <div class="container">
       <weather />
+      <apod />
+      
+  </div>
+  <photos />
   </div>
 </template>
 
@@ -13,7 +18,6 @@ export default Vue.extend({})
 <style>
 .container {
   margin: 0 auto;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   text-align: center;
