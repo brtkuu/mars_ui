@@ -12,35 +12,43 @@
         <option value="Spirit">Spirit</option>
         <option value="" selected>All</option>
     </select>
-    <div class="photos-container">
+    <loading v-if="!photosStatus" />
+    <div v-if="photosStatus" class="photos-container">
         <img class="photos-img" v-for="item in photos" :src="item.img_src" :key="item._id" />
     </div>
 </section>
 </template>
 <script>
 import axios from "axios";
+import loading from './loading.vue';
 
 export default {
+    components: { loading },
     data() {
         return {
             photos: [],
             rover: "",
             camera: "",
+            photosStatus: false,
         }
     },
     methods: {
         async roverChange(event) {
             this.rover = event.target.value;
+            this.photosStatus = false;
             await this.getPhotos(this.camera, this.rover);
         },
         async cameraChange(event) {
             this.camera = event.target.value;
+            this.photosStatus = false;
             await this.getPhotos(this.camera, this.rover);
         },
         async getPhotos(camera = "", rover = "") {
-        const response = await axios.get(`http://localhost:8000/photos?${camera ? `camera_name=${camera}`:""}${rover ? `&rover_name=${rover}`:""}`, {headers: {"Access-Control-Allow-Origin": "*"}})
-        this.photos = response.data;
-    }
+            console.log(this.photosStatus);
+            const response = await axios.get(`http://localhost:8000/photos?${camera ? `camera_name=${camera}`:""}${rover ? `&rover_name=${rover}`:""}`, {headers: {"Access-Control-Allow-Origin": "*"}})
+            this.photos = response.data;
+            this.photosStatus = true;
+        }
     },
     async mounted(){
         this.getPhotos();
