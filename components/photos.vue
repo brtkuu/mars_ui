@@ -14,9 +14,9 @@
     </select>
     <loading v-if="!photosStatus" />
     <div v-if="photosStatus" class="photos-container">
-        <img class="photos-img" v-for="i in iterations" :src="photos[i].img_src" :key="photos[i]._id" />
+        <img class="photos-img" v-for="i in iterations" :src="photos[i-1].img_src" :key="i" :id="i-1" />
     </div>
-    <button @click="morePhotos">More</button>
+    <button @click="morePhotos" v-if="iterations > 8">More</button>
 </section>
 </template>
 <script>
@@ -31,12 +31,17 @@ export default {
             rover: "",
             camera: "",
             photosStatus: false,
-            iterations: 9
+            iterations: 0
         }
     },
     methods: {
         morePhotos() {
-            this.iterations = this.iterations + 9;
+            if(this.iterations + 9 > this.photos.length){
+                this.iterations = this.photos.length;
+            } else {
+                this.iterations = this.iterations + 9;
+            }
+
         },
         async roverChange(event) {
             this.rover = event.target.value;
@@ -52,6 +57,12 @@ export default {
             console.log(this.photosStatus);
             const response = await axios.get(`http://localhost:8000/photos?${camera ? `camera_name=${camera}`:""}${rover ? `&rover_name=${rover}`:""}`, {headers: {"Access-Control-Allow-Origin": "*"}})
             this.photos = response.data;
+            if(this.photos.length > 9){
+                this.iterations = 9;
+            } else {
+                this.iterations = this.photos.length;
+            }
+            console.log(this.photos.length, this.iterations);
             this.photosStatus = true;
         }
     },
@@ -64,6 +75,7 @@ export default {
 .photos-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
     margin: 20px;
     
 }
