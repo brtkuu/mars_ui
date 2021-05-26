@@ -6,6 +6,7 @@
          <iframe v-if="apod.media === 'video'" width="420" height="315"
             :src="apod.url">
         </iframe> 
+        <p>{{apod.title}}</p>
     </section>
     <loading v-if="!apodStatus" />
 </div>
@@ -37,6 +38,9 @@ export default {
 }
 </script>
 <style>
+.apod {
+    margin: 20px;
+}
 .apod-pic {
     width: 300px;
     height: 250px;

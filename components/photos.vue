@@ -14,8 +14,9 @@
     </select>
     <loading v-if="!photosStatus" />
     <div v-if="photosStatus" class="photos-container">
-        <img class="photos-img" v-for="item in photos" :src="item.img_src" :key="item._id" />
+        <img class="photos-img" v-for="i in iterations" :src="photos[i].img_src" :key="photos[i]._id" />
     </div>
+    <button @click="morePhotos">More</button>
 </section>
 </template>
 <script>
@@ -30,9 +31,13 @@ export default {
             rover: "",
             camera: "",
             photosStatus: false,
+            iterations: 9
         }
     },
     methods: {
+        morePhotos() {
+            this.iterations = this.iterations + 9;
+        },
         async roverChange(event) {
             this.rover = event.target.value;
             this.photosStatus = false;
@@ -59,6 +64,7 @@ export default {
 .photos-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    margin: 20px;
     
 }
 .photos-img {
