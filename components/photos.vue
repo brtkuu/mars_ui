@@ -54,7 +54,6 @@ export default {
             await this.getPhotos(this.camera, this.rover);
         },
         async getPhotos(camera = "", rover = "") {
-            console.log(this.photosStatus);
             const response = await axios.get(`http://localhost:8000/photos?${camera ? `camera_name=${camera}`:""}${rover ? `&rover_name=${rover}`:""}`, {headers: {"Access-Control-Allow-Origin": "*"}})
             this.photos = response.data;
             if(this.photos.length > 9){
@@ -62,7 +61,6 @@ export default {
             } else {
                 this.iterations = this.photos.length;
             }
-            console.log(this.photos.length, this.iterations);
             this.photosStatus = true;
         }
     },

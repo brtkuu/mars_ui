@@ -28,7 +28,6 @@ export default {
         date = date? date :`${new Date().getFullYear()}-${new Date().getMonth() + 1 < 9 ?  `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}-${new Date().getDate()}`;
         const response = await axios.get(`http://localhost:8000/apod?date=${date}`, {headers: {"Access-Control-Allow-Origin": "*"}})
         this.apod = response.data[0];
-        console.log(this.apod);
         }
     },
     async mounted() {

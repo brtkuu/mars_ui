@@ -19,7 +19,6 @@ export default {
     },
     async mounted() {
         const response = await axios.get("http://localhost:8000/weather", {headers: {"Access-Control-Allow-Origin": "*"}})
-        console.log(response.data);
         this.weather = response.data;
     }
 }
